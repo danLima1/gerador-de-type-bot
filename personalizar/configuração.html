@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração do Typebot</title>
+    <link rel="stylesheet" href="config-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Configuração do Typebot</h1>
+        <form id="typebot-form">
+            <label for="typebot-name">Nome do Typebot:</label>
+            <input type="text" id="typebot-name" placeholder="Nome do Typebot" required>
+            
+            <div id="messages-container">
+                <h3>Mensagens:</h3>
+            </div>
+            <p id="typebot-id-display"></p>
+
+            <button type="button" id="add-message">Adicionar Mensagem</button>
+            <button type="button" id="add-input-condition">Adicionar Condição com Input</button>
+            <button type="submit">Salvar Typebot</button>
+        </form>
+    </div>
+
+    <script src="config-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opina Pro Oficial</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="user-bar">
+            <div class="avatar"><img src="https://ugc.production.linktr.ee/358d493c-48ff-4106-ba70-ee1fd8e4eb50_6f431c66-4564-4a22-a5f4-98c36c0420dc-Original.jpeg?io=true&size=avatar-v3_0" alt="Avatar"></div>
+            <div class="name">Opina Pro</div>
+            <div class="status">Online</div>
+        </div>
+        <div class="chat-box">
+            <div class="message typebot-host-bubble">
+                <div class="bubble-typing">Digitando...</div>
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing">Digitando...</div>
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing">Digitando...</div> 
+            </div> 
+            <!-- O input agora é parte da mensagem -->
+            <div class="message typebot-guest-bubble hide" id="email-input"> 
+                <input type="email" id="user-email" placeholder="Seu email" required>
+                <button onclick="validateEmail()">Enviar</button> 
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing">Digitando...</div>
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing">Digitando...</div> 
+            </div>
+            <!-- As imagens agora estão dentro do bubble-typing -->
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing"><img src="https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" alt="Imagem 1"></div>
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing"><img src="https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" alt="Imagem 2"></div>
+            </div>
+            <div class="message typebot-host-bubble hide">
+                <div class="bubble-typing">Digitando...</div> 
+            </div>
+        </div>
+        <!--  Removido o container da chat-input-->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
