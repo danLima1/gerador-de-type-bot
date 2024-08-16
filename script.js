@@ -34,6 +34,11 @@ function fetchMessages(typebotId) {
     });
 }
 
+function updateStatus(isTyping) {
+  const statusElement = document.getElementById('status');
+  statusElement.textContent = isTyping ? 'Digitando...' : 'Online';
+}
+
 function displayResponseButton(message) {
   const button = document.createElement("button");
   button.className = "response-button";
@@ -47,7 +52,6 @@ function displayResponseButton(message) {
   button.addEventListener("click", () => {
     displayUserMessage(message.button_label);
 
-    // Remove todos os botões de resposta
     const allButtons = document.querySelectorAll(".response-button");
     allButtons.forEach(btn => btn.remove());
 
@@ -58,14 +62,16 @@ function displayResponseButton(message) {
 
   scrollToBottom();
 }
+
 function displayMessage(message) {
-  // Lógica para botões de resposta
+  updateStatus(true);
+
   if (message.button_label) { 
     displayResponseButton(message);
+    updateStatus(false);
     return; 
   }
 
-  // Lógica para redirecionamento (com mensagem personalizada)
   if (message.redirectLink) {
     const messageElement = document.createElement('div');
     messageElement.className = 'message typebot-host-bubble';
@@ -83,7 +89,6 @@ function displayMessage(message) {
     return; 
   }
 
-  // Lógica para mensagens de texto e imagens (inalterada)
   const typingBubble = document.createElement('div');
   typingBubble.className = 'bubble-typing';
   typingBubble.innerHTML = '<span>.</span><span>.</span><span>.</span>';
@@ -131,6 +136,7 @@ function displayMessage(message) {
     document.querySelector('.chat-box').appendChild(messageElement);
 
     scrollToBottom();
+    updateStatus(false);
 
     if (message.type === 'email' || message.type === 'condicao') {
       setTimeout(() => {

@@ -1,33 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
-/* Define a fonte para o corpo do texto */
 body {
   font-family: 'Open Sans', sans-serif; 
-  margin: 0; /* Remove as margens padrão do corpo */
-  height: 100%; /* Define a altura do corpo como 100% da altura da janela */
+  margin: 0;
+  height: 100%;
 }
 
-/* Estilos gerais para o contêiner do chat */
 .chat-container {
   width: 100%;
-  min-height: 100vh;  /* Garante que o container ocupe pelo menos 100% da altura da viewport */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #121212; 
   background-image: url('https://storage.typebot.live/typebot/public/workspaces/mathuza@gmail.com/typebots/clxgkbhjb006cegl854f2554c/background?v=1718482981767'), url('https://www.transparenttextures.com/patterns/cubes.png');
-  background-size: cover; /* A imagem de fundo cobre todo o elemento */
-  background-repeat: no-repeat, repeat; 
+  background-size: cover;
+  background-repeat: no-repeat, repeat;
 }
 
-/* Estilos para a barra superior (informações do usuário) */
 .user-bar {
-  background-color: #0b141b; /* Cor de fundo escura */
-  color: #e9edef; /* Cor do texto clara */
-  padding: 10px 20px; /* Espaçamento interno */
+  background-color: #0b141b;
+  color: #e9edef;
+  padding: 10px 20px;
   display: flex;
-  align-items: center; /* Alinha os itens ao centro verticalmente */
-  border-top-left-radius: 10px; /* Arredonda o canto superior esquerdo */
-  border-top-right-radius: 10px; /* Arredonda o canto superior direito */
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   position: relative;
 }
 
@@ -35,102 +32,93 @@ body {
   width: 40px;
   height: 40px;
   margin-right: 10px; 
-  border-radius: 50%; /* Faz um círculo */
-  overflow: hidden; /* Esconde qualquer conteúdo que ultrapasse o círculo */
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .user-bar .avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Faz a imagem cobrir todo o espaço disponível */
+  object-fit: cover;
 }
 
 .user-bar .name {
   font-weight: 600;
   font-size: 1.2em;
+  display: block;
+  margin-bottom: -5px;
 }
 
 .user-bar .status {
   font-size: 0.9em;
-  color: #00a884; /* Cor verde */
-  margin-left: 5px; 
-  display: flex;
-  align-items: center; /* Alinha os itens ao centro verticalmente */
+  color: #00a884;
+  display: block;
+  margin-left: 0;
+  margin-top: 4px;
 }
 
-/* Cria um círculo verde antes do texto "Online" */
 .user-bar .status::before { 
-  content: '';
-  display: inline-block; 
-  width: 8px; 
-  height: 8px; 
-  background-color: #00a884; /* Cor verde */
-  border-radius: 50%; /* Faz um círculo */
+  content: '\f058';
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #00a884;
   margin-right: 5px;
 }
 
-/* Estilos para a caixa de mensagens */
 .chat-box {
-  flex: 1; /* Faz a caixa de mensagens ocupar o espaço disponível */
-  padding: 10px 15px; /* Espaçamento interno */
-  overflow-y: auto; /* Adiciona uma barra de rolagem vertical */
-  margin-bottom: 65px; /* Ajusta o espaçamento inferior para a área de entrada */
+  flex: 1;
+  padding: 10px 15px;
+  overflow-y: auto;
+  margin-bottom: 65px;
 }
 
-/* Estilos gerais para as mensagens */
 .message {
   display: flex; 
   align-items: flex-start;
   margin-bottom: 10px; 
 }
 
-/* Estilos para as mensagens do bot */
 .message.typebot-host-bubble {
   justify-content: flex-start;
 }
 
-/* Estilos para as mensagens do usuário */
 .message.typebot-user-bubble {
-  justify-content: flex-end; /* Alinha as mensagens à direita */
+  justify-content: flex-end;
 }
 
 .message .avatar {
-  width: 40px; 
-  height: 40px; 
-  border-radius: 50%; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   overflow: hidden;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .message .avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
-/* Estilos para o conteúdo da bolha da mensagem */
-
-
 .message.typebot-host-bubble .bubble-content {
-  background-color: #202c33; /* Cor de fundo da mensagem do bot */
-  color: #e9edef; /* Cor do texto da mensagem do bot */
+  background-color: #202c33;
+  color: #e9edef;
 }
 
 .message.typebot-user-bubble .bubble-content {
-  background-color: #075e54; /* Cor de fundo da mensagem do usuário */
-  color: #e9edef; /* Cor do texto da mensagem do usuário */
+  background-color: #075e54;
+  color: #e9edef;
 }
 
-/* Estilos para a bolha de digitação (3 pontinhos) */
 .bubble-typing { 
   display: flex;
-  align-items: center; /* Alinha os itens ao centro verticalmente */
+  align-items: center;
   font-size: 16px;
-  color: #e9edef; 
+  color: #e9edef;
   animation: blink 1.4s infinite steps(4, start);
-  padding: 10px 15px; /* Adiciona espaçamento interno */
-  background-color: #202c33; /* Cor de fundo da bolha de digitação */
-  border-radius: 10px; 
+  padding: 10px 15px;
+  background-color: #202c33;
+  border-radius: 10px;
 }
 
 .bubble-typing span {
@@ -146,139 +134,133 @@ body {
   animation-delay: 0.4s;
 }
 
-/* Animação de piscar para os pontinhos */
 @keyframes blink {
   0% {
-    opacity: 0.2; 
+    opacity: 0.2;
   }
   20% {
-    opacity: 1; 
+    opacity: 1;
   }
   100% {
-    opacity: 0.2; 
+    opacity: 0.2;
   }
 }
-/* Estilos para a área de entrada de texto */
+
 .chat-input {
-  background-color: #2a2f32; /* Cor de fundo escura */
-  padding: 10px 15px; /* Espaçamento interno */
-  display: flex; 
-  align-items: center; /* Alinha os itens ao centro verticalmente */
+  background-color: #2a2f32;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
   position: fixed;
   bottom: 0;
-  width: 100%; 
+  width: 100%;
   box-sizing: border-box;
-  border-bottom-left-radius: 10px; 
+  border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
 .chat-input input[type="text"] {
-  width: 100%; 
-  padding: 10px 15px; 
+  width: 100%;
+  padding: 10px 15px;
   border: none;
-  border-radius: 20px; 
+  border-radius: 20px;
   font-size: 16px;
-  color: #e9edef; /* Cor do texto clara */
+  color: #e9edef;
   background-color: #33383b;
 }
 
-/* Cor do texto do placeholder */
 .chat-input input[type="text"]::placeholder { 
-  color: #868c90; /* Cor cinza claro */
+  color: #868c90;
 }
 
-/* Estilos para o botão de enviar */
 .chat-input button {
   width: 45px;
   height: 45px;
-  background-color: #00a884; /* Cor verde */
+  background-color: #00a884;
   border: none;
-  border-radius: 50%; /* Faz um círculo */
-  margin-left: 10px; 
-  cursor: pointer; /* Altera o cursor para uma mãozinha */
+  border-radius: 50%;
+  margin-left: 10px;
+  cursor: pointer;
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
 }
 
-/* Estilos para a imagem dentro do botão */
 .chat-input button img {
-  width: 20px; 
+  width: 20px;
   height: 20px;
 }
 
 .chat-input button:hover {
-  background-color: #009172; /* Cor verde mais escura ao passar o mouse */
+  background-color: #009172;
 }
 
 .input-container {
   display: flex;
-  flex-direction: row; /* Define a direção do conteúdo para linha */
+  flex-direction: row;
   align-items: center;
   position: fixed;
   bottom: 0;
-  width: 100%; 
-  padding: 10px 15px; 
-  box-sizing: border-box; 
-  background-color: #2a2f32; 
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background-color: #2a2f32;
 }
 
 .styled-input {
-  flex-grow: 1; 
-  padding: 10px; 
+  flex-grow: 1;
+  padding: 10px;
   border: 1px solid #333;
   border-radius: 20px;
-  margin-right: 10px; 
+  margin-right: 10px;
   font-size: 16px;
-  color: #e9edef; 
-  background-color: #33383b; 
+  color: #e9edef;
+  background-color: #33383b;
 }
 
 .styled-input::placeholder {
   color: #868c90;
 }
 
-/* Estilos para o botão de envio dentro de um contêiner */
 .styled-button { 
-  width: 45px; 
+  width: 45px;
   height: 45px;
-  background-color: #0b141b; 
-  color: white; 
+  background-color: #0b141b;
+  color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  display: flex; 
+  display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 }
 
-/* Cor de fundo mais escura ao passar o mouse */
 .styled-button:hover {
-  background-color: #0b141b; 
+  background-color: #0b141b;
 }
 
 .styled-button img {
-  width: 20px; 
+  width: 20px;
   height: 20px;
 }
 
 .button-container {
   display: flex;
   justify-content: flex-start;
-  flex-wrap: wrap; /* Permite que os botões "quebrem" para a próxima linha se não couberem em uma */
-  gap: 10px; /* Adiciona espaço entre os botões */
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
 .response-button {
   background-color: #00a884;
-  color: #fff; 
+  color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 16px; 
-  transition: background-color 0.3s ease; 
+  font-size: 16px;
+  transition: background-color 0.3s ease;
   text-align: center;
 }
 
@@ -286,36 +268,34 @@ body {
   background-color: #008d73;
 }
 
-.response-button:active { 
+.response-button:active {
   background-color: #007b64;
 }
 
 .response-button:focus {
-  outline: none; 
+  outline: none;
   box-shadow: 0 0 0 2px rgba(0, 168, 132, 0.5);
 }
+
 .message.typebot-host-bubble.typing .bubble-content {
   background-color: transparent;
-  padding: 0; 
+  padding: 0;
 }
 
-/* Garante que o avatar seja exibido ao lado da bolha */
 .message.typebot-host-bubble.typing .typing-avatar {
-  display: flex; 
-  margin-right: 10px; 
+  display: flex;
+  margin-right: 10px;
 }
 
-/* Para aplicar as animações no avatar */
 .message .avatar { 
-  transition: transform 0.3s ease-in-out; /* Adicione a transição aqui */
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Estilos para imagens */
 .message img {
-  width: calc(208px + (100vw - 320px)); 
-  height: auto; /* Altura se ajusta automaticamente */
+  width: calc(208px + (100vw - 320px));
+  height: auto;
   max-width: 512px;
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 .message .bubble-content {
@@ -323,7 +303,7 @@ body {
   border-radius: 10px;
   font-size: 16px;
   line-height: 1.4;
-  max-width: 75%; 
-  overflow: hidden; 
-  display: inline-block; /* Ajusta a bolha ao conteúdo */
+  max-width: 75%;
+  overflow: hidden;
+  display: inline-block;
 }
