@@ -37,7 +37,7 @@ function fetchMessages(typebotId) {
 function displayResponseButton(message) {
   const button = document.createElement("button");
   button.className = "response-button";
-  button.textContent = message.button_label; 
+  button.textContent = message.button_label;
 
   const userMessage = document.createElement("div");
   userMessage.className = "message typebot-user-bubble";
@@ -46,15 +46,18 @@ function displayResponseButton(message) {
 
   button.addEventListener("click", () => {
     displayUserMessage(message.button_label);
-    button.remove();
-    displayMessage({ text: message.button_response }); 
-    messageIndex++; 
-    showNextMessage(); 
+
+    // Remove todos os botões de resposta
+    const allButtons = document.querySelectorAll(".response-button");
+    allButtons.forEach(btn => btn.remove());
+
+    displayMessage({ text: message.button_response });
+    messageIndex++;
+    showNextMessage();
   });
 
   scrollToBottom();
 }
-
 function displayMessage(message) {
   // Lógica para botões de resposta
   if (message.button_label) { 
