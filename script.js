@@ -18,6 +18,11 @@ function fetchMessages(typebotId) {
         .then(response => response.json())
         .then(data => {
             if (data.messages && data.messages.length > 0) {
+                // Atualizar avatar, nome e status
+                document.getElementById('avatar').src = data.avatar;
+                document.getElementById('display-name').textContent = data.displayName;
+                document.getElementById('status').textContent = data.status;
+                
                 messages = data.messages;
                 showNextMessage();
             } else {
@@ -33,51 +38,20 @@ function showNextMessage() {
     if (messageIndex < messages.length) {
         const currentMessage = messages[messageIndex];
 
-        setTimeout(() => {
-            // Verificar se a mensagem atual tem uma condição e deve mostrar um input
-            if (currentMessage.condition) {
+        if (currentMessage.type === 'email' || currentMessage.type === 'condicao') {
+            // Não incrementa o índice aqui; esperar a interação do usuário
+            if (currentMessage.type === 'email') {
+                showEmailPrompt(currentMessage);
+            } else if (currentMessage.type === 'condicao') {
                 showInputPrompt(currentMessage.condition);
-            } else {
-                displayMessage(currentMessage);
             }
-
-            scrollToBottom();
-        }, 2000);
-    }
-}
-
-function showInputPrompt(condition) {
-    const inputContainer = document.createElement('div');
-    inputContainer.className = 'message typebot-guest-bubble';
-
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.placeholder = 'Digite sua resposta...';
-
-    const submitButton = document.createElement('button');
-    submitButton.textContent = 'Enviar';
-    submitButton.addEventListener('click', () => {
-        const userInput = inputField.value.trim();
-        if (userInput) {
-            handleUserInput(userInput, condition);
         } else {
-            alert('Por favor, insira uma resposta.');
+            displayMessage(currentMessage);
+            messageIndex++;
+            setTimeout(showNextMessage, 2000);
         }
-    });
-
-    inputContainer.appendChild(inputField);
-    inputContainer.appendChild(submitButton);
-    document.querySelector('.chat-box').appendChild(inputContainer);
-
-    scrollToBottom();
-}
-
-function handleUserInput(userInput, condition) {
-    const matchingMessage = messages.find(message => message.condition === condition);
-    if (matchingMessage && userInput === condition) {
-        displayMessage(matchingMessage);
     } else {
-        showNextMessage();
+        console.log("Fim da conversa do typebot.");
     }
 }
 
@@ -99,8 +73,67 @@ function displayMessage(message) {
     messageElement.appendChild(typingBubble);
     document.querySelector('.chat-box').appendChild(messageElement);
 
-    messageIndex++;
-    showNextMessage();
+    scrollToBottom();
+}
+
+function showInputPrompt(condition) {
+    const inputContainer = document.createElement('div');
+    inputContainer.className = 'message typebot-guest-bubble';
+
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.placeholder = 'Digite sua resposta...';
+    inputField.required = true;
+
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Enviar';
+    submitButton.addEventListener('click', () => {
+        const userInput = inputField.value.trim();
+        if (userInput) {
+            handleUserInput(userInput, condition);
+        } else {
+            alert('Por favor, insira uma resposta.');
+        }
+    });
+
+    inputContainer.appendChild(inputField);
+    inputContainer.appendChild(submitButton);
+    document.querySelector('.chat-box').appendChild(inputContainer);
+
+    scrollToBottom();
+}
+
+function handleUserInput(userInput, condition) {
+    displayUserMessage(userInput);
+
+    if (userInput === condition) {
+        const matchingMessage = messages.find(message => message.condition === condition);
+
+        if (matchingMessage) {
+            setTimeout(() => {
+                displayMessage(matchingMessage);
+                messageIndex++; // Move para a próxima mensagem
+                setTimeout(showNextMessage, 2000); // Aguardar 2 segundos antes de exibir a próxima mensagem
+            }, 2000);
+        } else {
+            console.error("Mensagem para condição não encontrada.");
+        }
+    } else {
+        console.error("Condição não satisfeita.");
+    }
+}
+
+function displayUserMessage(message) {
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message typebot-user-bubble'; // Estilo para a mensagem do usuário
+
+    const messageText = document.createElement('div');
+    messageText.className = 'bubble-typing';
+    messageText.textContent = message;
+
+    userMessage.appendChild(messageText);
+    document.querySelector('.chat-box').appendChild(userMessage);
+    scrollToBottom();
 }
 
 function scrollToBottom() {

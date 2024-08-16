@@ -12,7 +12,17 @@
         <form id="typebot-form">
             <label for="typebot-name">Nome do Typebot:</label>
             <input type="text" id="typebot-name" placeholder="Nome do Typebot" required>
-            
+
+            <!-- Campos para customização do avatar, nome e status -->
+            <label for="typebot-avatar">Avatar URL:</label>
+            <input type="text" id="typebot-avatar" placeholder="URL da imagem do avatar">
+
+            <label for="typebot-display-name">Nome a ser exibido:</label>
+            <input type="text" id="typebot-display-name" placeholder="Nome a ser exibido no chat">
+
+            <label for="typebot-status">Status:</label>
+            <input type="text" id="typebot-status" placeholder="Status (Ex: Online, Offline)">
+
             <div id="messages-container">
                 <h3>Mensagens:</h3>
             </div>
@@ -20,6 +30,7 @@
 
             <button type="button" id="add-message">Adicionar Mensagem</button>
             <button type="button" id="add-input-condition">Adicionar Condição com Input</button>
+            <button type="button" id="add-email-message">Adicionar Mensagem com Email</button>
             <button type="submit">Salvar Typebot</button>
         </form>
     </div>

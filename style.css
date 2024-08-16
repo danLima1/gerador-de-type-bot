@@ -176,6 +176,28 @@ button:hover {
   display: none;
   opacity: 0;
 }
+.message.typebot-user-bubble {
+  background-color: #dcf8c6; /* cor de fundo para a mensagem do usuário */
+  margin-left: auto; /* faz com que as mensagens fiquem à direita */
+  border-radius: 10px 10px 0 10px;
+  padding: 10px;
+  max-width: 60%;
+}
+
+.message.typebot-host-bubble {
+  background-color: #f1f1f1; /* cor de fundo para a mensagem do bot */
+  margin-right: auto; /* faz com que as mensagens fiquem à esquerda */
+  border-radius: 10px 10px 10px 0;
+  padding: 10px;
+  max-width: 60%;
+}
+
+.bubble-typing {
+  /* Estilo comum para o texto ou imagem dentro das mensagens */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 
 /* Animação de Fade-in para as mensagens */
 @keyframes fadeIn {
