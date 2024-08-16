@@ -1,244 +1,255 @@
 /* Importa a fonte Open Sans do Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
-/* Estilos Gerais */
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #ffffff;
+html, body {
   margin: 0;
   padding: 0;
-  display: flex; /* Crie um flexbox para o corpo */
-  justify-content: center; /* Centraliza o chat horizontalmente */
-  align-items: center; /* Centraliza o chat verticalmente */
-  min-height: 100vh; /*  Define a altura mínima do corpo como 100% da viewport */
-}
-
-/* Container do Chat */
-.chat-container {
-  width: 100%; /* Ocupa 100% da largura disponível */
-  margin: 0; /* Remove as margens */
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  background-color: #fff; /* Adiciona cor de fundo */
-}
-
-/* Barra Superior (Nome/Status) */
-.user-bar {
-  background-color: #20c997;
-  color: #ffffff;
-  padding: 15px 20px;
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.avatar {
-  width: 30px;
-  height: 30px;
+/* Background pattern */
+.chat-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+  background-image: url('https://storage.typebot.live/typebot/public/workspaces/mathuza@gmail.com/typebots/clxgkbhjb006cegl854f2554c/background?v=1718482981767'), url('https://www.transparenttextures.com/patterns/cubes.png');
+  background-size: cover, contain;
+  background-repeat: no-repeat, repeat;
+}
+
+/* Top bar (User Information) */
+.user-bar {
+  background-color: #0b141b;
+  color: #e9edef;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+.user-bar .avatar {
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
   border-radius: 50%;
   overflow: hidden;
 }
 
-.avatar img {
+.user-bar .avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.name {
+.user-bar .name {
   font-weight: 600;
   font-size: 1.2em;
 }
 
-.status {
+.user-bar .status {
   font-size: 0.9em;
-  margin-left: 10px;
+  color: #00a884;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
 }
 
-/* Área das Mensagens */
+.user-bar .status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #00a884;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* Chat Messages */
 .chat-box {
-  padding: 20px;
-  background-color: #ffffff;
+  flex: 1;
+  padding: 10px 15px;
   overflow-y: auto;
-  height: calc(100vh - 80px); /* Ajuste a altura para caber o header e o input */
 }
 
-/* Estilos das Mensagens */
 .message {
-  margin-bottom: 15px;
-  position: relative;
-  clear: both;
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-.typebot-host-bubble {
-  background-color: #e5f5f0;
-  border: 1px solid #1db0a3;
-  color: #333;
-  padding: 12px 15px;
-  border-radius: 20px;
-  max-width: 80%;
-  float: left;
-  /* Adicionar sombra na caixa da mensagem */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-}
-
-/* Triângulo do balão do Typebot */
-.typebot-host-bubble::before {
-  content: '';
-  position: absolute;
-  top: 15px;
-  left: -8px;
-  border-top: 8px solid transparent;
-  border-right: 8px solid #1db0a3;
-  border-bottom: 8px solid transparent;
-}
-
-.typebot-guest-bubble {
-  background-color: #ffffff;
-  padding: 12px 15px;
-  border-radius: 20px;
-  max-width: 80%;
-  float: right;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
-}
-
-/* Triângulo do balão do usuário */
-.typebot-guest-bubble::before {
-  content: '';
-  position: absolute;
-  top: 15px;
-  right: -8px;
-  border-top: 8px solid transparent;
-  border-left: 8px solid #ffffff;
-  border-bottom: 8px solid transparent;
-}
-
-/* Bolha de Mensagem (Reutilizável) com Animação */
-.bubble-typing {
-  display: inline-block;
-  padding: 8px 12px; 
-  border: 1px solid #1db0a3;
-  border-radius: 20px;
-  max-width: 80%;
-}
-
-/* Animação de digitação com pontos */
-.bubble-typing::after {
-  content: " .  .  .  ";
-  display: inline-block;
-  white-space: pre;
-  animation: typing 1s infinite linear;
-  visibility: hidden; /* Esconde os pontos por padrão */
-}
-
-.message.hide .bubble-typing::after {
-  visibility: visible; /* Mostra os pontos apenas durante a animação */
-}
-
-@keyframes typing {
-  0%, 33%, 66% { transform: translateY(0); }
-  100%, 50%, 83% { transform: translateY(-5px); }
-}
-
-/* Input e Botão */
-input[type="email"] {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ced4da;
-  border-radius: 25px;
-  margin-right: 10px;
-  font-size: 1em;
-  box-sizing: border-box; /* Ajuste o tamanho para incluir padding e border */
-}
-
-button {
-  background-color: #20c997;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 25px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  box-sizing: border-box; /* Ajuste o tamanho para incluir padding e border */
-}
-
-button:hover {
-  background-color: #1db0a3;
-}
-
-/* Esconder Elementos */
-.hide {
-  display: none;
-  opacity: 0;
-}
-.message.typebot-user-bubble {
-  background-color: #dcf8c6; /* cor de fundo para a mensagem do usuário */
-  margin-left: auto; /* faz com que as mensagens fiquem à direita */
-  border-radius: 10px 10px 0 10px;
-  padding: 10px;
-  max-width: 60%;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
 .message.typebot-host-bubble {
-  background-color: #f1f1f1; /* cor de fundo para a mensagem do bot */
-  margin-right: auto; /* faz com que as mensagens fiquem à esquerda */
-  border-radius: 10px 10px 10px 0;
-  padding: 10px;
-  max-width: 60%;
+  justify-content: flex-start;
 }
 
+.message.typebot-user-bubble {
+  justify-content: flex-end;
+}
+
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.message .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message .bubble-content {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.4;
+  max-width: 75%;
+}
+
+.message.typebot-host-bubble .bubble-content {
+  background-color: #202c33;
+  color: #e9edef;
+}
+
+.message.typebot-user-bubble .bubble-content {
+  background-color: #075e54;
+  color: #e9edef;
+}
+
+/* Typing Animation */
 .bubble-typing {
-  /* Estilo comum para o texto ou imagem dentro das mensagens */
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #e9edef;
+  animation: blink 1.4s infinite steps(4, start);
 }
 
-
-/* Animação de Fade-in para as mensagens */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.bubble-typing span {
+  margin: 0 2px;
+  animation: blink 1.4s infinite both;
 }
 
-/* Estilo para o container do input e botão */
+.bubble-typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bubble-typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Input Area */
 .chat-input {
-  padding: 20px;
-  background-color: #ffffff;
-  display: flex; /*  Crie um flexbox */
-  align-items: center; /* Centraliza verticalmente */
+  background-color: #2a2f32;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-/* Estilos para a imagem dentro da mensagem */
-.bubble-typing img {
-  width: 100%; /* A imagem ocupa 100% da largura do bubble */
-  height: auto; /* A altura da imagem ajusta automaticamente para manter a proporção */
-  display: block;  /* A imagem se comporta como um bloco */
-  margin: 0 auto; /* Centraliza horizontalmente */
+.chat-input input[type="text"] {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  color: #e9edef;
+  background-color: #33383b;
 }
 
-/* Responsividade para Mobile */
-@media (max-width: 600px) {
-  .typebot-host-bubble {
-    max-width: 90%; 
-    float: none; 
-    text-align: left; 
-  }
+.chat-input input[type="text"]::placeholder {
+  color: #868c90;
+}
 
-  .typebot-guest-bubble {
-    max-width: 90%;
-    float: none;
-    text-align: right;
-  }
+.chat-input button {
+  width: 45px;
+  height: 45px;
+  background-color: #00a884;
+  border: none;
+  border-radius: 50%;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* Centraliza o input e o botão */
-  input[type="email"], button {
-    display: block;
-    width: 100%; 
-    margin: 10px auto; 
-  }
+.chat-input button img {
+  width: 20px;
+  height: 20px;
+}
+
+.chat-input button:hover {
+  background-color: #009172;
+}
+
+/* Estilização para o contêiner do input */
+.input-container {
+  display: flex;
+  flex-direction: row; /* Alinha o input e o botão na horizontal */
+  align-items: center;
+  margin-top: 10px;
+  width: 100%; /* Garante que o contêiner use 100% da largura */
+}
+
+/* Estilização para o input de email */
+.styled-input {
+  flex-grow: 1; /* Permite que o input ocupe o espaço disponível */
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #e9edef;
+  background-color: #33383b;
+}
+
+.styled-input::placeholder {
+  color: #868c90;
+}
+
+/* Estilização para o botão de envio */
+.styled-button {
+  width: 45px;
+  height: 45px;
+  background-color: #0b141b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styled-button:hover {
+  background-color: #0b141b;
+}
+
+.styled-button img {
+  width: 20px;
+  height: 20px;
 }

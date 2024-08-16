@@ -13,37 +13,8 @@
             <div class="name" id="display-name"></div>
             <div class="status" id="status"></div>
         </div>
-        <div class="chat-box">
-            <div class="message typebot-host-bubble">
-                <div class="bubble-typing">Digitando...</div>
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing">Digitando...</div>
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing">Digitando...</div> 
-            </div> 
-            <!-- O input agora é parte da mensagem -->
-            <div class="message typebot-guest-bubble hide" id="email-input"> 
-                <input type="email" id="user-email" placeholder="Seu email" required>
-                <button onclick="validateEmail()">Enviar</button> 
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing">Digitando...</div>
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing">Digitando...</div> 
-            </div>
-            <!-- As imagens agora estão dentro do bubble-typing -->
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing"><img src="https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" alt="Imagem 1"></div>
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing"><img src="https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" alt="Imagem 2"></div>
-            </div>
-            <div class="message typebot-host-bubble hide">
-                <div class="bubble-typing">Digitando...</div> 
-            </div>
+        <div class="chat-box" id="chat-box">
+            <!-- Placeholder for dynamically loaded messages -->
         </div>
     </div>
     <script src="script.js"></script>
