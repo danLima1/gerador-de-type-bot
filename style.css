@@ -7,10 +7,16 @@ body {
   background-color: #ffffff;
   margin: 0;
   padding: 0;
+<<<<<<< Updated upstream
   display: flex; /* Crie um flexbox para o corpo */
   justify-content: center; /* Centraliza o chat horizontalmente */
   align-items: center; /* Centraliza o chat verticalmente */
   min-height: 100vh; /*  Define a altura mínima do corpo como 100% da viewport */
+=======
+  height: 100%;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+>>>>>>> Stashed changes
 }
 
 /* Container do Chat */
@@ -55,6 +61,147 @@ body {
 
 .status {
   font-size: 0.9em;
+<<<<<<< Updated upstream
+=======
+  color: #00a884;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.user-bar .status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #00a884;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* Chat Messages */
+.chat-box {
+  flex: 1;
+  padding: 10px 15px;
+  overflow-y: auto;
+  margin-bottom: 65px; 
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.message.typebot-host-bubble {
+  justify-content: flex-start;
+}
+
+.message.typebot-user-bubble {
+  justify-content: flex-end;
+}
+
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.message .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message .bubble-content {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.4;
+  max-width: 75%;
+}
+
+.message.typebot-host-bubble .bubble-content {
+  background-color: #202c33;
+  color: #e9edef;
+}
+
+.message.typebot-user-bubble .bubble-content {
+  background-color: #075e54;
+  color: #e9edef;
+}
+
+/* Typing Animation */
+.bubble-typing {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #e9edef;
+  animation: blink 1.4s infinite steps(4, start);
+}
+
+.bubble-typing span {
+  margin: 0 2px;
+  animation: blink 1.4s infinite both;
+}
+
+.bubble-typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bubble-typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Input Area */
+.chat-input {
+  background-color: #2a2f32;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.chat-input input[type="text"] {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  color: #e9edef;
+  background-color: #33383b;
+}
+
+.chat-input input[type="text"]::placeholder {
+  color: #868c90;
+}
+
+.chat-input button {
+  width: 45px;
+  height: 45px;
+  background-color: #00a884;
+  border: none;
+  border-radius: 50%;
+>>>>>>> Stashed changes
   margin-left: 10px;
 }
 
@@ -74,11 +221,32 @@ body {
   animation: fadeIn 0.5s ease-in-out forwards;
 }
 
+<<<<<<< Updated upstream
 .typebot-host-bubble {
   background-color: #e5f5f0;
   border: 1px solid #1db0a3;
   color: #333;
   padding: 12px 15px;
+=======
+/* Estilização para o contêiner do input */
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background-color: #2a2f32;
+}
+
+/* Estilização para o input de email */
+.styled-input {
+  flex-grow: 1; 
+  padding: 10px;
+  border: 1px solid #333;
+>>>>>>> Stashed changes
   border-radius: 20px;
   max-width: 80%;
   float: left;
@@ -177,6 +345,7 @@ button:hover {
   opacity: 0;
 }
 
+<<<<<<< Updated upstream
 /* Animação de Fade-in para as mensagens */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -219,4 +388,35 @@ button:hover {
     width: 100%; 
     margin: 10px auto; 
   }
+=======
+
+/* Estilização para o botão de resposta */
+.response-button {
+  background-color: #00a884;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-align: center; /* Centraliza o texto */
+  float: right; /* Posiciona o botão à direita */
+  clear: both; /* Evita que o botão flutue acima de outros elementos */
+  margin-bottom: 10px; /* Adiciona uma margem inferior para espaçamento */
+}
+
+.response-button:hover {
+  background-color: #008d73;
+}
+
+.response-button:active {
+  background-color: #007b64;
+}
+
+.response-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 168, 132, 0.5);
+>>>>>>> Stashed changes
 }
