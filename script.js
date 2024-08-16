@@ -46,20 +46,35 @@ function displayResponseButton(message) {
 
   button.addEventListener("click", () => {
     displayUserMessage(message.button_label);
-    button.remove(); 
-    displayMessage({ text: message.button_response });
+    button.remove();
+    displayMessage({ text: message.button_response }); 
     messageIndex++;
-    showNextMessage(); 
+    showNextMessage();
   });
 
   scrollToBottom();
 }
 
 function displayMessage(message) {
-  if (message.button_label) {
+  if (message.buttonLabel) {
     displayResponseButton(message);
     return;
-  }
+  } 
+
+  if (message.redirectText) {
+    const linkElement = document.createElement("a");
+    linkElement.href = message.redirectLink;
+    linkElement.target = "_blank";
+    linkElement.textContent = message.redirectText;
+    const messageElement = document.createElement('div');
+    messageElement.className = 'message typebot-host-bubble'; 
+    messageElement.appendChild(linkElement);
+    document.querySelector('.chat-box').appendChild(messageElement);
+    scrollToBottom();
+    messageIndex++; 
+    showNextMessage();
+    return;
+  } 
 
   const typingBubble = document.createElement('div');
   typingBubble.className = 'bubble-typing';
@@ -73,40 +88,34 @@ function displayMessage(message) {
 
   setTimeout(() => {
     typingElement.remove();
-
     const messageElement = document.createElement('div');
     messageElement.className = 'message typebot-host-bubble';
-
     const avatar = document.createElement('div');
     avatar.className = 'avatar';
-
     const img = document.createElement('img');
     img.src = typebotAvatar;
-
     img.onload = function () {
       avatar.appendChild(img);
     };
     img.onerror = function () {
       console.error("Erro ao carregar o avatar.");
     };
-
     messageElement.appendChild(avatar);
 
     const messageContent = document.createElement('div');
     messageContent.className = 'bubble-content';
 
-    if (message.image_path) {
+    if (message.image_path) { 
       const img = document.createElement("img");
       img.src = message.image_path;
       img.alt = "Imagem";
       messageContent.appendChild(img);
     } else {
-      messageContent.textContent = message.text;
+      messageContent.textContent = message.text; 
     }
 
     messageElement.appendChild(messageContent);
     document.querySelector('.chat-box').appendChild(messageElement);
-
     scrollToBottom();
 
     if (message.type === 'email' || message.type === 'condicao') {
@@ -114,13 +123,12 @@ function displayMessage(message) {
         if (message.type === 'email') {
           showEmailPrompt(message);
         } else if (message.type === 'condicao') {
-          showInputPrompt(message.condition);
+          showInputPrompt(message.condition); 
         }
       }, 2000);
     }
   }, 1000);
 }
-
 function showInputPrompt(condition) {
   const inputContainer = document.createElement('div');
   inputContainer.className = 'message typebot-guest-bubble input-container';
