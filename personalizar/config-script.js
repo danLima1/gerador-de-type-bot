@@ -115,14 +115,16 @@ function addRedirectLinkEntry() {
   const messagesContainer = document.getElementById('messages-container');
   const redirectEntry = document.createElement('div');
   redirectEntry.className = 'message-entry';
-  const redirectTextLabel = document.createElement('label');
-  redirectTextLabel.textContent = 'Texto do Link:'; 
-  const redirectTextInput = document.createElement('input');
-  redirectTextInput.type = 'text';
-  redirectTextInput.className = 'redirect-text';
-  redirectTextInput.placeholder = 'Ex: Clique aqui para saber mais'; 
-  redirectTextInput.dataset.type = 'redirect'; 
-  const redirectLinkLabel = document.createElement('label');
+
+  const redirectMessageLabel = document.createElement('label'); 
+  redirectMessageLabel.textContent = 'Mensagem de Redirecionamento:';
+  const redirectMessageInput = document.createElement('input');
+  redirectMessageInput.type = 'text';
+  redirectMessageInput.className = 'redirect-message'; 
+  redirectMessageInput.placeholder = 'Ex: Você será redirecionado em alguns segundos...';
+  redirectMessageInput.dataset.type = 'redirect'; 
+
+  const redirectLinkLabel = document.createElement('label'); 
   redirectLinkLabel.textContent = 'URL de Redirecionamento:'; 
   const redirectLinkInput = document.createElement('input');
   redirectLinkInput.type = 'url';
@@ -130,8 +132,8 @@ function addRedirectLinkEntry() {
   redirectLinkInput.placeholder = 'Ex: https://www.exemplo.com';
   redirectLinkInput.dataset.type = 'redirect'; 
 
-  redirectEntry.appendChild(redirectTextLabel);
-  redirectEntry.appendChild(redirectTextInput);
+  redirectEntry.appendChild(redirectMessageLabel);
+  redirectEntry.appendChild(redirectMessageInput);
   redirectEntry.appendChild(redirectLinkLabel);
   redirectEntry.appendChild(redirectLinkInput);
   messagesContainer.appendChild(redirectEntry);
@@ -154,7 +156,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         const validationMessage = entry.querySelector('.email-validation') ? entry.querySelector('.email-validation').value : null;
         const buttonLabel = entry.querySelector('.button-label') ? entry.querySelector('.button-label').value : null;
         const buttonResponse = entry.querySelector('.response-text') ? entry.querySelector('.response-text').value : null;
-        const redirectText = entry.querySelector('.redirect-text') ? entry.querySelector('.redirect-text').value : null;
+        const redirectMessage = entry.querySelector('.redirect-message') ? entry.querySelector('.redirect-message').value : null; 
         const redirectLink = entry.querySelector('.redirect-link') ? entry.querySelector('.redirect-link').value : null;
         const type = entry.querySelector('[data-type]') ? entry.querySelector('[data-type]').dataset.type : null;
 
@@ -166,7 +168,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
             emailLabel: emailLabel,
             buttonLabel: buttonLabel,
             buttonResponse: buttonResponse,
-            redirectText: redirectText, 
+            redirectMessage: redirectMessage, 
             redirectLink: redirectLink,
             type: type
         };
@@ -199,8 +201,8 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         if (message.buttonResponse) {
             formData.append(`messages[${index}][buttonResponse]`, message.buttonResponse || '');
         }
-        if (message.redirectText) {
-            formData.append(`messages[${index}][redirectText]`, message.redirectText || '');
+        if (message.redirectMessage) {
+            formData.append(`messages[${index}][redirectMessage]`, message.redirectMessage || ''); 
         }
         if (message.redirectLink) {
             formData.append(`messages[${index}][redirectLink]`, message.redirectLink || '');

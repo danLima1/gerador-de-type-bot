@@ -37,7 +37,7 @@ function fetchMessages(typebotId) {
 function displayResponseButton(message) {
   const button = document.createElement("button");
   button.className = "response-button";
-  button.textContent = message.button_label;
+  button.textContent = message.button_label; 
 
   const userMessage = document.createElement("div");
   userMessage.className = "message typebot-user-bubble";
@@ -48,34 +48,39 @@ function displayResponseButton(message) {
     displayUserMessage(message.button_label);
     button.remove();
     displayMessage({ text: message.button_response }); 
-    messageIndex++;
-    showNextMessage();
+    messageIndex++; 
+    showNextMessage(); 
   });
 
   scrollToBottom();
 }
 
 function displayMessage(message) {
-  if (message.buttonLabel) {
+  // Lógica para botões de resposta
+  if (message.button_label) { 
     displayResponseButton(message);
-    return;
-  } 
+    return; 
+  }
 
-  if (message.redirectText) {
-    const linkElement = document.createElement("a");
-    linkElement.href = message.redirectLink;
-    linkElement.target = "_blank";
-    linkElement.textContent = message.redirectText;
+  // Lógica para redirecionamento (com mensagem personalizada)
+  if (message.redirectLink) {
     const messageElement = document.createElement('div');
-    messageElement.className = 'message typebot-host-bubble'; 
-    messageElement.appendChild(linkElement);
+    messageElement.className = 'message typebot-host-bubble';
+    const messageContent = document.createElement('div');
+    messageContent.className = 'bubble-content';
+    messageContent.textContent = message.redirectMessage || "Redirecionando em breve...";
+    messageElement.appendChild(messageContent);
     document.querySelector('.chat-box').appendChild(messageElement);
     scrollToBottom();
-    messageIndex++; 
-    showNextMessage();
-    return;
-  } 
 
+    setTimeout(() => {
+      window.location.href = message.redirectLink; 
+    }, 2000); 
+
+    return; 
+  }
+
+  // Lógica para mensagens de texto e imagens (inalterada)
   const typingBubble = document.createElement('div');
   typingBubble.className = 'bubble-typing';
   typingBubble.innerHTML = '<span>.</span><span>.</span><span>.</span>';
@@ -88,18 +93,23 @@ function displayMessage(message) {
 
   setTimeout(() => {
     typingElement.remove();
+
     const messageElement = document.createElement('div');
     messageElement.className = 'message typebot-host-bubble';
+
     const avatar = document.createElement('div');
     avatar.className = 'avatar';
+
     const img = document.createElement('img');
     img.src = typebotAvatar;
+
     img.onload = function () {
       avatar.appendChild(img);
     };
     img.onerror = function () {
       console.error("Erro ao carregar o avatar.");
     };
+
     messageElement.appendChild(avatar);
 
     const messageContent = document.createElement('div');
@@ -116,6 +126,7 @@ function displayMessage(message) {
 
     messageElement.appendChild(messageContent);
     document.querySelector('.chat-box').appendChild(messageElement);
+
     scrollToBottom();
 
     if (message.type === 'email' || message.type === 'condicao') {
@@ -125,10 +136,11 @@ function displayMessage(message) {
         } else if (message.type === 'condicao') {
           showInputPrompt(message.condition); 
         }
-      }, 2000);
+      }, 2000); 
     }
-  }, 1000);
+  }, 1000); 
 }
+
 function showInputPrompt(condition) {
   const inputContainer = document.createElement('div');
   inputContainer.className = 'message typebot-guest-bubble input-container';
