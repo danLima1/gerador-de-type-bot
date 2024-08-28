@@ -22,7 +22,44 @@ document.getElementById('add-star-rating').addEventListener('click', function ()
     addStarRatingEntry();
 });
 
+document.getElementById('add-simple-response-button').addEventListener('click', function () {
+    addSimpleResponseButtonEntry();
+});
+
+let lastButtonWasAdded = false;
+let buttonGroupCounter = 0;
+
+function addSimpleResponseButtonEntry() {
+    const messagesContainer = document.getElementById('messages-container');
+    const responseEntry = document.createElement('div');
+    responseEntry.className = 'message-entry';
+
+    const buttonTextLabel = document.createElement('label');
+    buttonTextLabel.textContent = 'Texto do Botão:';
+    const buttonInput = document.createElement('input');
+    buttonInput.type = 'text'; 
+    buttonInput.className = 'button-label'; 
+    buttonInput.placeholder = 'Texto do Botão'; 
+    buttonInput.dataset.type = 'button-simple';  // Atualizado para indicar que é um botão simples
+
+    if (!lastButtonWasAdded) {
+        buttonGroupCounter += 1;
+    }
+    
+    const buttonGroupId = `group-${buttonGroupCounter}`;
+    responseEntry.dataset.buttonGroupId = buttonGroupId;
+
+    responseEntry.appendChild(buttonTextLabel);
+    responseEntry.appendChild(buttonInput);
+    messagesContainer.appendChild(responseEntry);
+
+    lastButtonWasAdded = true; // Mantém no mesmo grupo até que outra mensagem seja adicionada
+}
+
+
+
 function addMessageEntry(isConditional) {
+    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
     const messagesContainer = document.getElementById('messages-container');
     const messageEntry = document.createElement('div');
     messageEntry.className = 'message-entry';
@@ -55,6 +92,7 @@ function addMessageEntry(isConditional) {
 }
 
 function addEmailMessageEntry() {
+    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
     const messagesContainer = document.getElementById('messages-container');
     const messageEntry = document.createElement('div');
     messageEntry.className = 'message-entry';
@@ -90,6 +128,7 @@ function addResponseButtonEntry() {
     const messagesContainer = document.getElementById('messages-container');
     const responseEntry = document.createElement('div');
     responseEntry.className = 'message-entry';
+
     const buttonTextLabel = document.createElement('label');
     buttonTextLabel.textContent = 'Texto do Botão:';
     const buttonInput = document.createElement('input');
@@ -97,72 +136,84 @@ function addResponseButtonEntry() {
     buttonInput.className = 'button-label'; 
     buttonInput.placeholder = 'Texto do Botão'; 
     buttonInput.dataset.type = 'button'; 
+    
     const responseLabel = document.createElement('label');
     responseLabel.textContent = 'Resposta Associada:';
     const responseText = document.createElement('textarea');
     responseText.placeholder = 'Digite a resposta associada ao botão...';
     responseText.rows = 2;
     responseText.className = 'response-text'; 
-    responseText.dataset.type = 'response';  
+    responseText.dataset.type = 'response';
+
+    if (!lastButtonWasAdded) {
+        buttonGroupCounter += 1;
+    }
+    
+    const buttonGroupId = `group-${buttonGroupCounter}`;
+    responseEntry.dataset.buttonGroupId = buttonGroupId;
 
     responseEntry.appendChild(buttonTextLabel);
     responseEntry.appendChild(buttonInput);
     responseEntry.appendChild(responseLabel);
     responseEntry.appendChild(responseText);
     messagesContainer.appendChild(responseEntry);
+
+    lastButtonWasAdded = true; // Mantém no mesmo grupo até que outra mensagem seja adicionada
 }
 
 function addRedirectLinkEntry() {
-  const messagesContainer = document.getElementById('messages-container');
-  const redirectEntry = document.createElement('div');
-  redirectEntry.className = 'message-entry';
+    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    const messagesContainer = document.getElementById('messages-container');
+    const redirectEntry = document.createElement('div');
+    redirectEntry.className = 'message-entry';
 
-  const redirectMessageLabel = document.createElement('label'); 
-  redirectMessageLabel.textContent = 'Mensagem de Redirecionamento:';
-  const redirectMessageInput = document.createElement('input');
-  redirectMessageInput.type = 'text';
-  redirectMessageInput.className = 'redirect-message'; 
-  redirectMessageInput.placeholder = 'Ex: Você será redirecionado em alguns segundos...';
-  redirectMessageInput.dataset.type = 'redirect'; 
+    const redirectMessageLabel = document.createElement('label'); 
+    redirectMessageLabel.textContent = 'Mensagem de Redirecionamento:';
+    const redirectMessageInput = document.createElement('input');
+    redirectMessageInput.type = 'text';
+    redirectMessageInput.className = 'redirect-message'; 
+    redirectMessageInput.placeholder = 'Ex: Você será redirecionado em alguns segundos...';
+    redirectMessageInput.dataset.type = 'redirect'; 
 
-  const redirectLinkLabel = document.createElement('label'); 
-  redirectLinkLabel.textContent = 'URL de Redirecionamento:'; 
-  const redirectLinkInput = document.createElement('input');
-  redirectLinkInput.type = 'url';
-  redirectLinkInput.className = 'redirect-link'; 
-  redirectLinkInput.placeholder = 'Ex: https://www.exemplo.com';
-  redirectLinkInput.dataset.type = 'redirect'; 
+    const redirectLinkLabel = document.createElement('label'); 
+    redirectLinkLabel.textContent = 'URL de Redirecionamento:'; 
+    const redirectLinkInput = document.createElement('input');
+    redirectLinkInput.type = 'url';
+    redirectLinkInput.className = 'redirect-link'; 
+    redirectLinkInput.placeholder = 'Ex: https://www.exemplo.com';
+    redirectLinkInput.dataset.type = 'redirect'; 
 
-  redirectEntry.appendChild(redirectMessageLabel);
-  redirectEntry.appendChild(redirectMessageInput);
-  redirectEntry.appendChild(redirectLinkLabel);
-  redirectEntry.appendChild(redirectLinkInput);
-  messagesContainer.appendChild(redirectEntry);
+    redirectEntry.appendChild(redirectMessageLabel);
+    redirectEntry.appendChild(redirectMessageInput);
+    redirectEntry.appendChild(redirectLinkLabel);
+    redirectEntry.appendChild(redirectLinkInput);
+    messagesContainer.appendChild(redirectEntry);
 }
 
 function addStarRatingEntry() {
-  const messagesContainer = document.getElementById('messages-container');
-  const starEntry = document.createElement('div');
-  starEntry.className = 'message-entry';
+    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    const messagesContainer = document.getElementById('messages-container');
+    const starEntry = document.createElement('div');
+    starEntry.className = 'message-entry';
 
-  const messageLabel = document.createElement('label');
-  messageLabel.textContent = 'Mensagem de Avaliação:';
-  const messageInput = document.createElement('textarea');
-  messageInput.placeholder = 'Digite a mensagem de avaliação aqui...';
-  messageInput.rows = 2;
+    const messageLabel = document.createElement('label');
+    messageLabel.textContent = 'Mensagem de Avaliação:';
+    const messageInput = document.createElement('textarea');
+    messageInput.placeholder = 'Digite a mensagem de avaliação aqui...';
+    messageInput.rows = 2;
 
-  const ratingLabel = document.createElement('label');
-  ratingLabel.textContent = 'Configurar Avaliação:';
-  const ratingInput = document.createElement('input');
-  ratingInput.type = 'text';
-  ratingInput.placeholder = 'Digite o texto de agradecimento após a avaliação';
-  ratingInput.dataset.type = 'avaliacao'; 
+    const ratingLabel = document.createElement('label');
+    ratingLabel.textContent = 'Configurar Avaliação:';
+    const ratingInput = document.createElement('input');
+    ratingInput.type = 'text';
+    ratingInput.placeholder = 'Digite o texto de agradecimento após a avaliação';
+    ratingInput.dataset.type = 'avaliacao'; 
 
-  starEntry.appendChild(messageLabel);
-  starEntry.appendChild(messageInput);
-  starEntry.appendChild(ratingLabel);
-  starEntry.appendChild(ratingInput);
-  messagesContainer.appendChild(starEntry);
+    starEntry.appendChild(messageLabel);
+    starEntry.appendChild(messageInput);
+    starEntry.appendChild(ratingLabel);
+    starEntry.appendChild(ratingInput);
+    messagesContainer.appendChild(starEntry);
 }
 
 document.getElementById('typebot-form').addEventListener('submit', function (e) {
@@ -186,6 +237,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         const redirectLink = entry.querySelector('.redirect-link') ? entry.querySelector('.redirect-link').value : null;
         const ratingMessage = entry.querySelector('[data-type="avaliacao"]') ? entry.querySelector('[data-type="avaliacao"]').value : null;
         const type = entry.querySelector('[data-type]') ? entry.querySelector('[data-type]').dataset.type : null;
+        const buttonGroupId = entry.dataset.buttonGroupId || null;  // Novo campo para grupo de botões
 
         return {
             text: text,
@@ -197,10 +249,13 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
             buttonResponse: buttonResponse,
             redirectMessage: redirectMessage, 
             redirectLink: redirectLink,
-            ratingMessage: ratingMessage,  // Inclui a mensagem de agradecimento pela avaliação
-            type: type
+            ratingMessage: ratingMessage,
+            type: type,
+            buttonGroupId: buttonGroupId  // Adiciona o grupo de botões ao objeto
         };
     });
+
+
 
     const formData = new FormData();
     formData.append('name', typebotName);
@@ -237,6 +292,9 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         }
         if (message.ratingMessage) {
             formData.append(`messages[${index}][ratingMessage]`, message.ratingMessage || '');
+        }
+        if (message.buttonGroupId) {  // Adiciona o campo de grupo de botões
+            formData.append(`messages[${index}][buttonGroupId]`, message.buttonGroupId || '');
         }
     });
 
