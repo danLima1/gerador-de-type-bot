@@ -20,22 +20,12 @@ function fetchMessages(typebotId) {
     .then(data => {
       if (data.messages && data.messages.length > 0) {
         typebotAvatar = data.avatar;
-
-        const userBarHTML = `
-          <div class="user-bar">
-            <div class="user-info">
-              <div id="avatar" class="avatar">
-                <img src="${data.avatar}" alt="Avatar">
-              </div>
-              <div class="name">
-                <div id="display-name">${data.displayName} <i class="fas fa-check-circle"></i></div>
-              </div>
-            </div>
-            <div id="status">${data.status || 'Online'}</div>
-          </div>
-        `;
-
-        document.getElementById('user-bar-container').innerHTML = userBarHTML; 
+        document.getElementById('avatar').src = data.avatar;
+        document.getElementById('display-name').textContent = data.displayName + ' '; 
+        const iconeVerificado = document.createElement('i');
+        iconeVerificado.className = 'fas fa-check-circle'; 
+        document.getElementById('display-name').appendChild(iconeVerificado); 
+        document.getElementById('status').textContent = data.status || 'Online';
         messages = data.messages;
         showNextMessage();
       } else {
@@ -57,10 +47,7 @@ function displayResponseButtons(message) {
   buttonContainer.className = "button-container";
   const buttonGroupId = message.buttonGroupId;
   const buttonsInGroup = messages.filter(msg => msg.buttonGroupId === buttonGroupId && msg.button_label);
-  const existingButtonContainer = document.querySelector(`.button-container[data-message-id="${message.id}"]`);
-  if (existingButtonContainer) {
-    existingButtonContainer.remove();
-  }
+  document.querySelectorAll(".button-container").forEach(container => container.remove());
   buttonsInGroup.forEach((msg) => {
     const button = document.createElement("button");
     button.className = "response-button";
@@ -74,7 +61,6 @@ function displayResponseButtons(message) {
     });
     buttonContainer.appendChild(button);
   });
-  buttonContainer.dataset.messageId = message.id;
   document.querySelector(".chat-box").appendChild(buttonContainer);
   scrollToBottom();
 }
@@ -188,14 +174,11 @@ function displayMessage(message) {
       if (message.type === 'email') {
         setTimeout(() => {
           showEmailPrompt(message);
-        }, 1500);
+        }, 2000);
       } else if (message.type === 'condicao') {
         setTimeout(() => {
           showInputPrompt(message.condition);
-        }, 1500);
-      } else {
-        messageIndex++;
-        setTimeout(showNextMessage, 1500);
+        }, 2000);
       }
     }, 1000);
   } else { 
@@ -231,11 +214,9 @@ function displayMessage(message) {
 
     scrollToBottom();
     updateStatus(false);
-
-    messageIndex++;
-    setTimeout(showNextMessage, 1500);
   }
 }
+
 
 function displayStarRating(message) {
   const ratingContainer = document.createElement('div');
@@ -285,7 +266,6 @@ function showInputPrompt(condition) {
   const submitButton = document.createElement('button');
   submitButton.textContent = 'Enviar';
   submitButton.className = 'styled-button';
-
   const sendInput = () => {
     const userInput = inputField.value.trim();
     if (userInput) {
@@ -303,7 +283,6 @@ function showInputPrompt(condition) {
       sendInput();
     }
   });
-
   inputContainer.appendChild(inputField);
   inputContainer.appendChild(submitButton);
   document.querySelector('.chat-box').appendChild(inputContainer);
@@ -317,11 +296,14 @@ function showNextMessage() {
       displayStarRating(currentMessage);
     } else {
       displayMessage(currentMessage);
+      messageIndex++;
+      setTimeout(showNextMessage, 2000); 
     }
   } else {
     console.log("Fim da conversa do typebot.");
   }
 }
+
 
 function showEmailPrompt(message) {
   const emailContainer = document.createElement('div');
@@ -373,15 +355,19 @@ function handleUserInput(userInput, condition) {
   if (userInput === condition) {
     const matchingMessage = messages.find(message => message.condition === condition);
     if (matchingMessage) {
-      messageIndex = messages.indexOf(matchingMessage);
-      displayMessage(matchingMessage);
+      const nextValidMessageIndex = messageIndex + 1; 
+      messageIndex = nextValidMessageIndex;
+      setTimeout(() => {
+        displayMessage(matchingMessage); 
+        showNextMessage(); 
+      }, 2000); 
     } else {
       console.error("Mensagem para condição não encontrada.");
     }
   } else {
     displayUserMessage(userInput);
-    messageIndex++;
-    showNextMessage();
+    messageIndex++; 
+    showNextMessage(); 
   }
 }
 
