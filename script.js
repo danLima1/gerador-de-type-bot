@@ -21,7 +21,6 @@ function fetchMessages(typebotId) {
       if (data.messages && data.messages.length > 0) {
         typebotAvatar = data.avatar;
 
-        // Criando o HTML da barra de usuário com template literals:
         const userBarHTML = `
           <div class="user-bar">
             <div class="user-info">
@@ -36,9 +35,7 @@ function fetchMessages(typebotId) {
           </div>
         `;
 
-        // Substituindo o conteúdo de um elemento existente (por exemplo, um container) pelo novo HTML:
         document.getElementById('user-bar-container').innerHTML = userBarHTML; 
-
         messages = data.messages;
         showNextMessage();
       } else {
@@ -60,7 +57,10 @@ function displayResponseButtons(message) {
   buttonContainer.className = "button-container";
   const buttonGroupId = message.buttonGroupId;
   const buttonsInGroup = messages.filter(msg => msg.buttonGroupId === buttonGroupId && msg.button_label);
-  document.querySelectorAll(".button-container").forEach(container => container.remove());
+  const existingButtonContainer = document.querySelector(`.button-container[data-message-id="${message.id}"]`);
+  if (existingButtonContainer) {
+    existingButtonContainer.remove();
+  }
   buttonsInGroup.forEach((msg) => {
     const button = document.createElement("button");
     button.className = "response-button";
@@ -74,6 +74,7 @@ function displayResponseButtons(message) {
     });
     buttonContainer.appendChild(button);
   });
+  buttonContainer.dataset.messageId = message.id;
   document.querySelector(".chat-box").appendChild(buttonContainer);
   scrollToBottom();
 }
@@ -187,11 +188,14 @@ function displayMessage(message) {
       if (message.type === 'email') {
         setTimeout(() => {
           showEmailPrompt(message);
-        }, 2000);
+        }, 1500);
       } else if (message.type === 'condicao') {
         setTimeout(() => {
           showInputPrompt(message.condition);
-        }, 2000);
+        }, 1500);
+      } else {
+        messageIndex++;
+        setTimeout(showNextMessage, 1500);
       }
     }, 1000);
   } else { 
@@ -227,11 +231,16 @@ function displayMessage(message) {
 
     scrollToBottom();
     updateStatus(false);
+
+    messageIndex++;
+    setTimeout(showNextMessage, 1500);
   }
 }
-
-
 function displayStarRating(message) {
+  if (!message.ratingMessage) {
+    console.error('ratingMessage não está definido no objeto de mensagem.');
+    return;
+  }
   const ratingContainer = document.createElement('div');
   ratingContainer.className = 'rating-container';
 
@@ -285,7 +294,6 @@ function showInputPrompt(condition) {
     if (userInput) {
       inputContainer.remove();
       handleUserInput(userInput, condition);
-      showNextMessage(); // Chama a próxima mensagem após receber o input do usuário
     } else {
       alert('Por favor, insira uma resposta.');
     }
@@ -305,7 +313,6 @@ function showInputPrompt(condition) {
   scrollToBottom();
 }
 
-
 function showNextMessage() {
   if (messageIndex < messages.length) {
     const currentMessage = messages[messageIndex];
@@ -313,14 +320,11 @@ function showNextMessage() {
       displayStarRating(currentMessage);
     } else {
       displayMessage(currentMessage);
-      messageIndex++;
-      setTimeout(showNextMessage, 2000); 
     }
   } else {
     console.log("Fim da conversa do typebot.");
   }
 }
-
 
 function showEmailPrompt(message) {
   const emailContainer = document.createElement('div');
@@ -372,19 +376,15 @@ function handleUserInput(userInput, condition) {
   if (userInput === condition) {
     const matchingMessage = messages.find(message => message.condition === condition);
     if (matchingMessage) {
-      const nextValidMessageIndex = messageIndex + 1; 
-      messageIndex = nextValidMessageIndex;
-      setTimeout(() => {
-        displayMessage(matchingMessage); 
-        showNextMessage(); 
-      }, 2000); 
+      messageIndex = messages.indexOf(matchingMessage);
+      displayMessage(matchingMessage);
     } else {
       console.error("Mensagem para condição não encontrada.");
     }
   } else {
     displayUserMessage(userInput);
-    messageIndex++; 
-    showNextMessage(); 
+    messageIndex++;
+    showNextMessage();
   }
 }
 
