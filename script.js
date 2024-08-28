@@ -20,12 +20,25 @@ function fetchMessages(typebotId) {
     .then(data => {
       if (data.messages && data.messages.length > 0) {
         typebotAvatar = data.avatar;
-        document.getElementById('avatar').src = data.avatar;
-        document.getElementById('display-name').textContent = data.displayName + ' '; 
-        const iconeVerificado = document.createElement('i');
-        iconeVerificado.className = 'fas fa-check-circle'; 
-        document.getElementById('display-name').appendChild(iconeVerificado); 
-        document.getElementById('status').textContent = data.status || 'Online';
+
+        // Criando o HTML da barra de usuário com template literals:
+        const userBarHTML = `
+          <div class="user-bar">
+            <div class="user-info">
+              <div id="avatar" class="avatar">
+                <img src="${data.avatar}" alt="Avatar">
+              </div>
+              <div class="name">
+                <div id="display-name">${data.displayName} <i class="fas fa-check-circle"></i></div>
+              </div>
+            </div>
+            <div id="status">${data.status || 'Online'}</div>
+          </div>
+        `;
+
+        // Substituindo o conteúdo de um elemento existente (por exemplo, um container) pelo novo HTML:
+        document.getElementById('user-bar-container').innerHTML = userBarHTML; 
+
         messages = data.messages;
         showNextMessage();
       } else {
@@ -266,11 +279,13 @@ function showInputPrompt(condition) {
   const submitButton = document.createElement('button');
   submitButton.textContent = 'Enviar';
   submitButton.className = 'styled-button';
+
   const sendInput = () => {
     const userInput = inputField.value.trim();
     if (userInput) {
       inputContainer.remove();
       handleUserInput(userInput, condition);
+      showNextMessage(); // Chama a próxima mensagem após receber o input do usuário
     } else {
       alert('Por favor, insira uma resposta.');
     }
@@ -283,11 +298,13 @@ function showInputPrompt(condition) {
       sendInput();
     }
   });
+
   inputContainer.appendChild(inputField);
   inputContainer.appendChild(submitButton);
   document.querySelector('.chat-box').appendChild(inputContainer);
   scrollToBottom();
 }
+
 
 function showNextMessage() {
   if (messageIndex < messages.length) {
