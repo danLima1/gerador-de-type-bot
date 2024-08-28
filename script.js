@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchMessages(typebotId) {
-  fetch(`https://typebotapi.onrender.com/${typebotId}`)
+  fetch(`https://typebotapi.onrender.com/get_messages/${typebotId}`)
     .then(response => response.json())
     .then(data => {
       if (data.messages && data.messages.length > 0) {
