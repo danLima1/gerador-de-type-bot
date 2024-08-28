@@ -18,6 +18,10 @@ document.getElementById('add-redirect-link').addEventListener('click', function 
     addRedirectLinkEntry();
 });
 
+document.getElementById('add-star-rating').addEventListener('click', function () {
+    addStarRatingEntry();
+});
+
 function addMessageEntry(isConditional) {
     const messagesContainer = document.getElementById('messages-container');
     const messageEntry = document.createElement('div');
@@ -25,10 +29,7 @@ function addMessageEntry(isConditional) {
     
     if (isConditional) {
         const conditionLabel = document.createElement('label');
-        conditionLabel.textContent = 'Condição (se o usuário digitar):';
         const conditionInput = document.createElement('input');
-        conditionInput.type = 'text';
-        conditionInput.placeholder = 'Exemplo: 1';
         conditionInput.className = 'condition-input';  
         conditionInput.dataset.type = "condicao";  
         messageEntry.appendChild(conditionLabel);
@@ -139,6 +140,31 @@ function addRedirectLinkEntry() {
   messagesContainer.appendChild(redirectEntry);
 }
 
+function addStarRatingEntry() {
+  const messagesContainer = document.getElementById('messages-container');
+  const starEntry = document.createElement('div');
+  starEntry.className = 'message-entry';
+
+  const messageLabel = document.createElement('label');
+  messageLabel.textContent = 'Mensagem de Avaliação:';
+  const messageInput = document.createElement('textarea');
+  messageInput.placeholder = 'Digite a mensagem de avaliação aqui...';
+  messageInput.rows = 2;
+
+  const ratingLabel = document.createElement('label');
+  ratingLabel.textContent = 'Configurar Avaliação:';
+  const ratingInput = document.createElement('input');
+  ratingInput.type = 'text';
+  ratingInput.placeholder = 'Digite o texto de agradecimento após a avaliação';
+  ratingInput.dataset.type = 'avaliacao'; 
+
+  starEntry.appendChild(messageLabel);
+  starEntry.appendChild(messageInput);
+  starEntry.appendChild(ratingLabel);
+  starEntry.appendChild(ratingInput);
+  messagesContainer.appendChild(starEntry);
+}
+
 document.getElementById('typebot-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const typebotName = document.getElementById('typebot-name').value;
@@ -158,6 +184,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         const buttonResponse = entry.querySelector('.response-text') ? entry.querySelector('.response-text').value : null;
         const redirectMessage = entry.querySelector('.redirect-message') ? entry.querySelector('.redirect-message').value : null; 
         const redirectLink = entry.querySelector('.redirect-link') ? entry.querySelector('.redirect-link').value : null;
+        const ratingMessage = entry.querySelector('[data-type="avaliacao"]') ? entry.querySelector('[data-type="avaliacao"]').value : null;
         const type = entry.querySelector('[data-type]') ? entry.querySelector('[data-type]').dataset.type : null;
 
         return {
@@ -170,6 +197,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
             buttonResponse: buttonResponse,
             redirectMessage: redirectMessage, 
             redirectLink: redirectLink,
+            ratingMessage: ratingMessage,  // Inclui a mensagem de agradecimento pela avaliação
             type: type
         };
     });
@@ -206,6 +234,9 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         }
         if (message.redirectLink) {
             formData.append(`messages[${index}][redirectLink]`, message.redirectLink || '');
+        }
+        if (message.ratingMessage) {
+            formData.append(`messages[${index}][ratingMessage]`, message.ratingMessage || '');
         }
     });
 
