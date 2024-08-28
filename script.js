@@ -236,11 +236,8 @@ function displayMessage(message) {
     setTimeout(showNextMessage, 1500);
   }
 }
+
 function displayStarRating(message) {
-  if (!message.ratingMessage) {
-    console.error('ratingMessage não está definido no objeto de mensagem.');
-    return;
-  }
   const ratingContainer = document.createElement('div');
   ratingContainer.className = 'rating-container';
 
