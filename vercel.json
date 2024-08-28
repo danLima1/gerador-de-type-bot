@@ -1,6 +1,5 @@
 {
-    "rewrites": [
-      { "source": "/minha-rota/:id", "destination": "/index.html?id=:id" }
-    ]
-  }
-  
+  "redirects": [
+    { "source": "/:path*", "destination": "/index.html?id=:path*", "permanent": true }
+  ]
+}
