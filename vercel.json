@@ -1,5 +1,5 @@
 {
-  "redirects": [
-    { "source": "/:path*", "destination": "/index.html?id=:path*", "permanent": true }
+  "rewrites": [
+    { "source": "/details/:id", "destination": "/index.html?id=:id" }
   ]
 }
