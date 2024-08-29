@@ -29,6 +29,17 @@ document.getElementById('add-simple-response-button').addEventListener('click', 
 let lastButtonWasAdded = false;
 let buttonGroupCounter = 0;
 
+function createCancelButton(entry) {
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.textContent = 'Cancelar';
+    cancelButton.className = 'cancel-button';
+    cancelButton.addEventListener('click', function () {
+        entry.remove();
+    });
+    return cancelButton;
+}
+
 function addSimpleResponseButtonEntry() {
     const messagesContainer = document.getElementById('messages-container');
     const responseEntry = document.createElement('div');
@@ -37,42 +48,44 @@ function addSimpleResponseButtonEntry() {
     const buttonTextLabel = document.createElement('label');
     buttonTextLabel.textContent = 'Texto do Botão:';
     const buttonInput = document.createElement('input');
-    buttonInput.type = 'text'; 
-    buttonInput.className = 'button-label'; 
-    buttonInput.placeholder = 'Texto do Botão'; 
-    buttonInput.dataset.type = 'button-simple';  // Atualizado para indicar que é um botão simples
+    buttonInput.type = 'text';
+    buttonInput.className = 'button-label';
+    buttonInput.placeholder = 'Texto do Botão';
+    buttonInput.dataset.type = 'button-simple';
+
+    const cancelButton = createCancelButton(responseEntry);
 
     if (!lastButtonWasAdded) {
         buttonGroupCounter += 1;
     }
-    
+
     const buttonGroupId = `group-${buttonGroupCounter}`;
     responseEntry.dataset.buttonGroupId = buttonGroupId;
 
     responseEntry.appendChild(buttonTextLabel);
     responseEntry.appendChild(buttonInput);
+    responseEntry.appendChild(cancelButton);
     messagesContainer.appendChild(responseEntry);
 
-    lastButtonWasAdded = true; // Mantém no mesmo grupo até que outra mensagem seja adicionada
+    lastButtonWasAdded = true;
 }
 
-
-
 function addMessageEntry(isConditional) {
-    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    lastButtonWasAdded = false;
     const messagesContainer = document.getElementById('messages-container');
     const messageEntry = document.createElement('div');
     messageEntry.className = 'message-entry';
-    
+
     if (isConditional) {
         const conditionLabel = document.createElement('label');
+        conditionLabel.textContent = 'Condição:';
         const conditionInput = document.createElement('input');
-        conditionInput.className = 'condition-input';  
-        conditionInput.dataset.type = "condicao";  
+        conditionInput.className = 'condition-input';
+        conditionInput.dataset.type = "condicao";
         messageEntry.appendChild(conditionLabel);
         messageEntry.appendChild(conditionInput);
     }
-    
+
     const messageLabel = document.createElement('label');
     messageLabel.textContent = 'Mensagem:';
     const messageInput = document.createElement('textarea');
@@ -83,37 +96,45 @@ function addMessageEntry(isConditional) {
     const imageInput = document.createElement('input');
     imageInput.type = 'file';
     imageInput.accept = 'image/*';
-    
+
+    const cancelButton = createCancelButton(messageEntry);
+
     messageEntry.appendChild(messageLabel);
     messageEntry.appendChild(messageInput);
     messageEntry.appendChild(imageLabel);
     messageEntry.appendChild(imageInput);
+    messageEntry.appendChild(cancelButton);
     messagesContainer.appendChild(messageEntry);
 }
 
 function addEmailMessageEntry() {
-    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    lastButtonWasAdded = false;
     const messagesContainer = document.getElementById('messages-container');
     const messageEntry = document.createElement('div');
     messageEntry.className = 'message-entry';
+
     const messageLabel = document.createElement('label');
     messageLabel.textContent = 'Mensagem:';
     const messageInput = document.createElement('textarea');
     messageInput.placeholder = 'Digite a mensagem solicitando o email (ex: Digite seu email: )';
     messageInput.rows = 1;
+
     const emailInputLabel = document.createElement('label');
-    emailInputLabel.textContent = 'Label do Campo Email (opcional):'; 
+    emailInputLabel.textContent = 'Label do Campo Email (opcional):';
     const emailInput = document.createElement('input');
     emailInput.type = 'text';
     emailInput.placeholder = 'Label do Campo (opcional - deixe em branco para o padrão)';
-    emailInput.className = 'email-label'; 
-    emailInput.dataset.type = 'email'; 
+    emailInput.className = 'email-label';
+    emailInput.dataset.type = 'email';
+
     const emailValidationLabel = document.createElement('label');
-    emailValidationLabel.textContent = 'Validação do Email:'; 
+    emailValidationLabel.textContent = 'Validação do Email:';
     const emailValidationMessage = document.createElement('textarea');
     emailValidationMessage.placeholder = 'Mensagem a ser exibida em caso de erro (ex: Email inválido. Por favor, tente novamente.)';
     emailValidationMessage.rows = 1;
-    emailValidationMessage.className = 'email-validation'; 
+    emailValidationMessage.className = 'email-validation';
+
+    const cancelButton = createCancelButton(messageEntry);
 
     messageEntry.appendChild(messageLabel);
     messageEntry.appendChild(messageInput);
@@ -121,6 +142,7 @@ function addEmailMessageEntry() {
     messageEntry.appendChild(emailInput);
     messageEntry.appendChild(emailValidationLabel);
     messageEntry.appendChild(emailValidationMessage);
+    messageEntry.appendChild(cancelButton);
     messagesContainer.appendChild(messageEntry);
 }
 
@@ -132,23 +154,25 @@ function addResponseButtonEntry() {
     const buttonTextLabel = document.createElement('label');
     buttonTextLabel.textContent = 'Texto do Botão:';
     const buttonInput = document.createElement('input');
-    buttonInput.type = 'text'; 
-    buttonInput.className = 'button-label'; 
-    buttonInput.placeholder = 'Texto do Botão'; 
-    buttonInput.dataset.type = 'button'; 
-    
+    buttonInput.type = 'text';
+    buttonInput.className = 'button-label';
+    buttonInput.placeholder = 'Texto do Botão';
+    buttonInput.dataset.type = 'button';
+
     const responseLabel = document.createElement('label');
     responseLabel.textContent = 'Resposta Associada:';
     const responseText = document.createElement('textarea');
     responseText.placeholder = 'Digite a resposta associada ao botão...';
     responseText.rows = 2;
-    responseText.className = 'response-text'; 
+    responseText.className = 'response-text';
     responseText.dataset.type = 'response';
+
+    const cancelButton = createCancelButton(responseEntry);
 
     if (!lastButtonWasAdded) {
         buttonGroupCounter += 1;
     }
-    
+
     const buttonGroupId = `group-${buttonGroupCounter}`;
     responseEntry.dataset.buttonGroupId = buttonGroupId;
 
@@ -156,42 +180,46 @@ function addResponseButtonEntry() {
     responseEntry.appendChild(buttonInput);
     responseEntry.appendChild(responseLabel);
     responseEntry.appendChild(responseText);
+    responseEntry.appendChild(cancelButton);
     messagesContainer.appendChild(responseEntry);
 
-    lastButtonWasAdded = true; // Mantém no mesmo grupo até que outra mensagem seja adicionada
+    lastButtonWasAdded = true;
 }
 
 function addRedirectLinkEntry() {
-    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    lastButtonWasAdded = false;
     const messagesContainer = document.getElementById('messages-container');
     const redirectEntry = document.createElement('div');
     redirectEntry.className = 'message-entry';
 
-    const redirectMessageLabel = document.createElement('label'); 
+    const redirectMessageLabel = document.createElement('label');
     redirectMessageLabel.textContent = 'Mensagem de Redirecionamento:';
     const redirectMessageInput = document.createElement('input');
     redirectMessageInput.type = 'text';
-    redirectMessageInput.className = 'redirect-message'; 
+    redirectMessageInput.className = 'redirect-message';
     redirectMessageInput.placeholder = 'Ex: Você será redirecionado em alguns segundos...';
-    redirectMessageInput.dataset.type = 'redirect'; 
+    redirectMessageInput.dataset.type = 'redirect';
 
-    const redirectLinkLabel = document.createElement('label'); 
-    redirectLinkLabel.textContent = 'URL de Redirecionamento:'; 
+    const redirectLinkLabel = document.createElement('label');
+    redirectLinkLabel.textContent = 'URL de Redirecionamento:';
     const redirectLinkInput = document.createElement('input');
     redirectLinkInput.type = 'url';
-    redirectLinkInput.className = 'redirect-link'; 
+    redirectLinkInput.className = 'redirect-link';
     redirectLinkInput.placeholder = 'Ex: https://www.exemplo.com';
-    redirectLinkInput.dataset.type = 'redirect'; 
+    redirectLinkInput.dataset.type = 'redirect';
+
+    const cancelButton = createCancelButton(redirectEntry);
 
     redirectEntry.appendChild(redirectMessageLabel);
     redirectEntry.appendChild(redirectMessageInput);
     redirectEntry.appendChild(redirectLinkLabel);
     redirectEntry.appendChild(redirectLinkInput);
+    redirectEntry.appendChild(cancelButton);
     messagesContainer.appendChild(redirectEntry);
 }
 
 function addStarRatingEntry() {
-    lastButtonWasAdded = false;  // Reinicia o grupo quando uma mensagem é adicionada
+    lastButtonWasAdded = false;
     const messagesContainer = document.getElementById('messages-container');
     const starEntry = document.createElement('div');
     starEntry.className = 'message-entry';
@@ -207,12 +235,15 @@ function addStarRatingEntry() {
     const ratingInput = document.createElement('input');
     ratingInput.type = 'text';
     ratingInput.placeholder = 'Digite o texto de agradecimento após a avaliação';
-    ratingInput.dataset.type = 'avaliacao'; 
+    ratingInput.dataset.type = 'avaliacao';
+
+    const cancelButton = createCancelButton(starEntry);
 
     starEntry.appendChild(messageLabel);
     starEntry.appendChild(messageInput);
     starEntry.appendChild(ratingLabel);
     starEntry.appendChild(ratingInput);
+    starEntry.appendChild(cancelButton);
     messagesContainer.appendChild(starEntry);
 }
 
@@ -233,11 +264,11 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         const validationMessage = entry.querySelector('.email-validation') ? entry.querySelector('.email-validation').value : null;
         const buttonLabel = entry.querySelector('.button-label') ? entry.querySelector('.button-label').value : null;
         const buttonResponse = entry.querySelector('.response-text') ? entry.querySelector('.response-text').value : null;
-        const redirectMessage = entry.querySelector('.redirect-message') ? entry.querySelector('.redirect-message').value : null; 
+        const redirectMessage = entry.querySelector('.redirect-message') ? entry.querySelector('.redirect-message').value : null;
         const redirectLink = entry.querySelector('.redirect-link') ? entry.querySelector('.redirect-link').value : null;
         const ratingMessage = entry.querySelector('[data-type="avaliacao"]') ? entry.querySelector('[data-type="avaliacao"]').value : null;
         const type = entry.querySelector('[data-type]') ? entry.querySelector('[data-type]').dataset.type : null;
-        const buttonGroupId = entry.dataset.buttonGroupId || null;  // Novo campo para grupo de botões
+        const buttonGroupId = entry.dataset.buttonGroupId || null;
 
         return {
             text: text,
@@ -247,22 +278,20 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
             emailLabel: emailLabel,
             buttonLabel: buttonLabel,
             buttonResponse: buttonResponse,
-            redirectMessage: redirectMessage, 
+            redirectMessage: redirectMessage,
             redirectLink: redirectLink,
             ratingMessage: ratingMessage,
             type: type,
-            buttonGroupId: buttonGroupId  // Adiciona o grupo de botões ao objeto
+            buttonGroupId: buttonGroupId
         };
     });
-
-
 
     const formData = new FormData();
     formData.append('name', typebotName);
     formData.append('avatar', avatarURL);
     formData.append('displayName', displayName);
     formData.append('status', status);
-    
+
     messages.forEach((message, index) => {
         formData.append(`messages[${index}][text]`, message.text || '');
         formData.append(`messages[${index}][email_label]`, message.emailLabel || '');
@@ -285,7 +314,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
             formData.append(`messages[${index}][buttonResponse]`, message.buttonResponse || '');
         }
         if (message.redirectMessage) {
-            formData.append(`messages[${index}][redirectMessage]`, message.redirectMessage || ''); 
+            formData.append(`messages[${index}][redirectMessage]`, message.redirectMessage || '');
         }
         if (message.redirectLink) {
             formData.append(`messages[${index}][redirectLink]`, message.redirectLink || '');
@@ -293,7 +322,7 @@ document.getElementById('typebot-form').addEventListener('submit', function (e) 
         if (message.ratingMessage) {
             formData.append(`messages[${index}][ratingMessage]`, message.ratingMessage || '');
         }
-        if (message.buttonGroupId) {  // Adiciona o campo de grupo de botões
+        if (message.buttonGroupId) {
             formData.append(`messages[${index}][buttonGroupId]`, message.buttonGroupId || '');
         }
     });
